@@ -1,0 +1,563 @@
+/* ==========================================================================
+   3D RACING DODGE - ENHANCED STYLESHEET
+   ========================================================================== */
+
+:root {
+    --color-bg-dark: #090c15;
+    --color-primary: #00f0ff;
+    --color-primary-glow: rgba(0, 240, 255, 0.4);
+    --color-accent: #ff2255;
+    --color-gold: #f7b731;
+    --color-text: #ffffff;
+    --color-text-dim: #9aa8c7;
+    --color-glass: rgba(13, 19, 36, 0.88);
+    --color-glass-border: rgba(0, 240, 255, 0.35);
+    --font-head: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-bg-dark);
+    font-family: var(--font-body);
+    color: var(--color-text);
+}
+
+/* 3D WebGL Canvas Container */
+#canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* UI Overlay Layer */
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.btn, .modal-box, .glass-panel, .screen-full {
+    pointer-events: auto;
+}
+
+/* Glassmorphism Panel Container */
+.glass-panel {
+    background: var(--color-glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.65);
+}
+
+/* Full Screen Overlay Screens */
+.screen-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(9, 12, 21, 0.72);
+    z-index: 20;
+}
+
+/* Start Menu Box */
+.start-box {
+    width: 480px;
+    padding: 36px;
+    text-align: center;
+}
+
+.game-logo {
+    font-family: var(--font-head);
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo-accent {
+    color: var(--color-primary);
+    text-shadow: 0 0 16px var(--color-primary-glow);
+}
+
+.loading-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--color-text-dim);
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+.high-score-badge {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    color: var(--color-gold);
+    background: rgba(247, 183, 49, 0.15);
+    border: 1px solid rgba(247, 183, 49, 0.4);
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.instructions-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #c8d6e5;
+}
+
+.key-legend {
+    margin-top: 8px;
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    color: var(--color-primary);
+}
+
+.sep {
+    margin: 0 8px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Menu Buttons */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 280px;
+    margin: 0 auto;
+}
+
+.menu-buttons.horizontal {
+    flex-direction: row;
+    width: auto;
+}
+
+.btn {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 13px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--color-primary);
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-color: #00f0ff;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 114, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(0, 240, 255, 0.7);
+}
+
+.btn-secondary {
+    background: rgba(13, 19, 36, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 240, 255, 0.15);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.btn-glow {
+    animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.9); }
+}
+
+/* In-Game HUD */
+#hud-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hud-box {
+    position: absolute;
+    padding: 14px 20px;
+}
+
+.hud-top-left {
+    top: 24px;
+    left: 24px;
+}
+
+.hud-top-right {
+    top: 24px;
+    right: 24px;
+}
+
+.hud-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hud-label {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--color-text-dim);
+}
+
+.hud-value {
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.hud-label-sm {
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+}
+
+.hud-value-sub {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.hud-value-coins {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-gold);
+}
+
+.speedo-panel {
+    text-align: right;
+}
+
+.speedo-num {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 14px var(--color-primary-glow);
+}
+
+.speedo-unit {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    margin-left: 6px;
+}
+
+/* Nitro Meter Bar */
+.nitro-container {
+    margin-top: 6px;
+}
+
+.nitro-label {
+    font-family: var(--font-head);
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.nitro-bar-track {
+    width: 140px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-left: auto;
+}
+
+.nitro-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #00f0ff, #ff793f);
+    box-shadow: 0 0 8px var(--color-primary-glow);
+    transition: width 0.1s linear;
+}
+
+/* Challenge Banner */
+.challenge-banner {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 18px;
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+.challenge-tag {
+    color: var(--color-gold);
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+/* Floating Popup Indicator */
+.floating-popup {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    text-shadow: 0 0 20px var(--color-gold);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-popup.show {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+}
+
+/* Bottom Controls Banner */
+.hud-controls-banner {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 22px;
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+}
+
+/* Crash / Game Over Box */
+.crash-box {
+    width: 500px;
+    padding: 36px;
+    text-align: center;
+}
+
+.crash-header {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--color-accent);
+    text-shadow: 0 0 20px rgba(255, 34, 85, 0.5);
+}
+
+.badge-new-best {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid var(--color-primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin: 10px 0 18px 0;
+    display: inline-block;
+    animation: pulseGlow 1.5s infinite;
+}
+
+.crash-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.stat-title {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--color-text-dim);
+}
+
+.stat-val {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.stat-val.highlight {
+    color: var(--color-primary);
+}
+
+/* Garage & Settings Modals */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.78);
+    z-index: 30;
+}
+
+.modal-box {
+    width: 540px;
+    max-width: 90vw;
+    padding: 32px;
+}
+
+.modal-box h2 {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.garage-section {
+    text-align: left;
+}
+
+.section-label {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--color-text-dim);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.color-picker-grid {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.color-swatch {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.color-swatch:hover, .color-swatch.active {
+    transform: scale(1.15);
+    border-color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+.stripe-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.stripe-option.active, .diff-btn.active {
+    background: rgba(0, 240, 255, 0.25);
+    border-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.checkbox-label {
+    font-size: 0.95rem;
+    color: #c8d6e5;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.controls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.viva-content {
+    max-height: 360px;
+    overflow-y: auto;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #c0cdf0;
+    padding-right: 8px;
+}
+
+.viva-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.viva-content li strong {
+    color: var(--color-primary);
+}
+
+kbd {
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid var(--color-primary);
+    color: #ffffff;
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.mt-1 { margin-top: 6px; }
+.mt-3 { margin-top: 20px; }

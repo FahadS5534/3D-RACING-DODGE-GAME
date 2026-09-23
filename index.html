@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Racing Dodge - Computer Graphics Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- UI Overlay Layer -->
+    <div id="ui-overlay">
+
+        <!-- 1. START SCREEN -->
+        <div id="screen-start-menu" class="screen-full">
+            <div class="glass-panel start-box">
+                <div class="game-logo">
+                    <span class="logo-accent">3D</span> RACING DODGE
+                </div>
+                <div class="loading-subtitle">Survive • Dodge • Accelerate</div>
+                
+                <div class="high-score-badge">
+                    🏆 BEST SCORE: <span id="start-best-score">0</span>
+                </div>
+
+                <div class="instructions-card">
+                    <p>Avoid oncoming obstacles and collect gold coins!</p>
+                    <div class="key-legend">
+                        <kbd>A</kbd> / <kbd>←</kbd> Left
+                        <span class="sep">•</span>
+                        <kbd>D</kbd> / <kbd>→</kbd> Right
+                        <span class="sep">•</span>
+                        <kbd>SPACE</kbd> Nitro
+                    </div>
+                </div>
+
+                <div class="menu-buttons">
+                    <button id="btn-start-game" class="btn btn-primary btn-lg btn-glow">
+                        🏁 START GAME
+                    </button>
+                    <button id="btn-garage" class="btn btn-secondary">
+                        🚘 GARAGE
+                    </button>
+                    <button id="btn-settings" class="btn btn-secondary">
+                        ⚙️ SETTINGS
+                    </button>
+                    <button id="btn-about" class="btn btn-secondary">
+                        📚 ABOUT / CG VIVA
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. IN-GAME HUD -->
+        <div id="hud-layer">
+            <!-- Top Left: Score, Distance & Coins -->
+            <div class="hud-box hud-top-left glass-panel">
+                <div class="hud-row">
+                    <span class="hud-label">SCORE</span>
+                    <span id="hud-score" class="hud-value">0</span>
+                </div>
+                <div class="hud-row mt-1">
+                    <span class="hud-label-sm">DISTANCE</span>
+                    <span id="hud-distance" class="hud-value-sub">0 m</span>
+                    <span class="sep">|</span>
+                    <span class="hud-label-sm">COINS</span>
+                    <span id="hud-coins" class="hud-value-coins">🪙 0</span>
+                </div>
+            </div>
+
+            <!-- Top Right: Speedometer & Nitro Meter -->
+            <div class="hud-box hud-top-right glass-panel speedo-panel">
+                <div class="speedo-main">
+                    <span id="hud-speed" class="speedo-num">80</span>
+                    <span class="speedo-unit">KM/H</span>
+                </div>
+                <div class="nitro-container">
+                    <span class="nitro-label">NITRO [SPACE]</span>
+                    <div class="nitro-bar-track">
+                        <div id="hud-nitro-bar" class="nitro-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge Banner -->
+            <div id="hud-challenge-banner" class="challenge-banner glass-panel">
+                <span class="challenge-tag">MISSION:</span>
+                <span id="hud-challenge-text">Collect 10 Coins (0/10)</span>
+            </div>
+
+            <!-- Floating Popup (+100 Coin, Challenge Complete) -->
+            <div id="hud-floating-popup" class="floating-popup"></div>
+
+            <!-- Bottom Center Controls Legend -->
+            <div class="hud-controls-banner glass-panel">
+                <kbd>A</kbd> / <kbd>←</kbd> LEFT &nbsp;•&nbsp; <kbd>D</kbd> / <kbd>→</kbd> RIGHT &nbsp;•&nbsp; <kbd>SPACE</kbd> NITRO &nbsp;•&nbsp; <kbd>N</kbd> NIGHT &nbsp;•&nbsp; <kbd>M</kbd> RAIN
+            </div>
+        </div>
+
+        <!-- 3. GAME OVER SCREEN -->
+        <div id="screen-game-over" class="screen-full" style="display: none;">
+            <div class="glass-panel crash-box">
+                <div class="crash-header">💥 CRASH!</div>
+                
+                <div id="badge-new-best" class="badge-new-best" style="display: none;">
+                    ✨ NEW HIGH SCORE! ✨
+                </div>
+
+                <div class="crash-stats">
+                    <div class="stat-card">
+                        <div class="stat-title">SCORE</div>
+                        <div id="final-score" class="stat-val highlight">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">DISTANCE</div>
+                        <div id="final-distance" class="stat-val">0 m</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">COINS</div>
+                        <div id="final-coins" class="stat-val">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">BEST SCORE</div>
+                        <div id="final-best-score" class="stat-val">0</div>
+                    </div>
+                </div>
+
+                <div class="menu-buttons horizontal mt-3">
+                    <button id="btn-restart" class="btn btn-primary btn-lg">
+                        🔄 TRY AGAIN
+                    </button>
+                    <button id="btn-finish-garage" class="btn btn-secondary">
+                        🚘 GARAGE
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. GARAGE / CAR CUSTOMIZATION MODAL -->
+        <div id="modal-garage" class="modal-overlay" style="display: none;">
+            <div class="glass-panel modal-box">
+                <h2>🚘 CAR GARAGE & CUSTOMIZATION</h2>
+                
+                <div class="garage-section">
+                    <label class="section-label">PAINT COLOR</label>
+                    <div class="color-picker-grid">
+                        <div class="color-swatch active" data-color="eb3b5a" style="background: #eb3b5a;"></div>
+                        <div class="color-swatch" data-color="3867d6" style="background: #3867d6;"></div>
+                        <div class="color-swatch" data-color="20bf6b" style="background: #20bf6b;"></div>
+                        <div class="color-swatch" data-color="f7b731" style="background: #f7b731;"></div>
+                        <div class="color-swatch" data-color="f5f6fa" style="background: #f5f6fa;"></div>
+                        <div class="color-swatch" data-color="2d3436" style="background: #2d3436;"></div>
+                    </div>
+                </div>
+
+                <div class="garage-section mt-3">
+                    <label class="section-label">RACING STRIPE</label>
+                    <div class="stripe-options">
+                        <button class="btn btn-secondary stripe-option active" data-stripe="none">NONE</button>
+                        <button class="btn btn-secondary stripe-option" data-stripe="f5f6fa">WHITE</button>
+                        <button class="btn btn-secondary stripe-option" data-stripe="2d3436">BLACK</button>
+                        <button class="btn btn-secondary stripe-option" data-stripe="f7b731">GOLD</button>
+                    </div>
+                </div>
+
+                <div class="garage-section mt-3">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chk-underglow"> Enable Cyan Underglow Light
+                    </label>
+                </div>
+
+                <button class="btn btn-primary btn-close-modal mt-3">APPLY & CLOSE</button>
+            </div>
+        </div>
+
+        <!-- 5. SETTINGS & DIFFICULTY MODAL -->
+        <div id="modal-settings" class="modal-overlay" style="display: none;">
+            <div class="glass-panel modal-box">
+                <h2>⚙️ GAME SETTINGS</h2>
+
+                <div class="garage-section">
+                    <label class="section-label">DIFFICULTY MODE</label>
+                    <div class="stripe-options">
+                        <button class="btn btn-secondary diff-btn" data-diff="EASY">EASY</button>
+                        <button class="btn btn-secondary diff-btn active" data-diff="NORMAL">NORMAL</button>
+                        <button class="btn btn-secondary diff-btn" data-diff="HARD">HARD</button>
+                    </div>
+                </div>
+
+                <div class="garage-section mt-3">
+                    <label class="section-label">CONTROLS REFERENCE</label>
+                    <div class="controls-list">
+                        <div><kbd>A</kbd> / <kbd>←</kbd> Move Left</div>
+                        <div><kbd>D</kbd> / <kbd>→</kbd> Move Right</div>
+                        <div><kbd>SPACE</kbd> Activate Nitro Boost</div>
+                        <div><kbd>N</kbd> Toggle Day / Night Mode</div>
+                        <div><kbd>M</kbd> Toggle Weather (Clear / Rain)</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-close-modal mt-3">CLOSE</button>
+            </div>
+        </div>
+
+        <!-- 6. ABOUT / CG VIVA MODAL -->
+        <div id="modal-about" class="modal-overlay" style="display: none;">
+            <div class="glass-panel modal-box about-box">
+                <h2>COMPUTER GRAPHICS VIVA & TECHNICAL ARCHITECTURE</h2>
+                <div class="viva-content">
+                    <p>This project is built from scratch using Three.js and WebGL without external GLB file dependencies, demonstrating comprehensive Computer Graphics topics:</p>
+                    <ul>
+                        <li><strong>1. Hierarchical 3D Modeling:</strong> The player car is built procedurally using a <code>THREE.Group</code> parent matrix hierarchy with chassis, cabin, wheels, spoiler, and bumpers.</li>
+                        <li><strong>2. Dynamic Particle Systems:</strong> Custom particle emitters for tire smoke, nitro exhaust flames, crash debris, and <code>THREE.Points</code> rain simulation.</li>
+                        <li><strong>3. Perspective Camera & FOV Expansion:</strong> Dynamic perspective projection expanding camera Field of View from 60° to 78° during high-speed nitro boosts.</li>
+                        <li><strong>4. Lighting & Shading Models:</strong> Dual Day/Night lighting with HemisphereLight, Directional sunlight with soft shadow mapping, roadside lamp PointLights, and car headlights.</li>
+                        <li><strong>5. Collision & Collection Detection:</strong> Real-time 3D bounding box (<code>THREE.Box3</code>) intersection testing for obstacles and gold coins.</li>
+                        <li><strong>6. Interpolation & Physics:</strong> Linear interpolation (<code>lerp</code>) for smooth horizontal steering, body roll tilt, and speed curve progression.</li>
+                    </ul>
+                </div>
+                <button class="btn btn-secondary btn-close-modal mt-3">CLOSE</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Entry Module -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
