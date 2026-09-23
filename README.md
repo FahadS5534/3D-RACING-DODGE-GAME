@@ -111,8 +111,8 @@ racing/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/FahadS5534/racing.git
-   cd racing
+   git clone https://github.com/FahadS5534/3D-RACING-DODGE-GAME.git
+   cd 3D-RACING-DODGE-GAME
    ```
 
 2. **Install dependencies**:
