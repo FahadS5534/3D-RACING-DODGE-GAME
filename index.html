@@ -52,9 +52,6 @@
                     <button id="btn-settings" class="btn btn-secondary">
                         ⚙️ SETTINGS
                     </button>
-                    <button id="btn-about" class="btn btn-secondary">
-                        📚 ABOUT / CG VIVA
-                    </button>
                 </div>
             </div>
         </div>
@@ -210,24 +207,7 @@
             </div>
         </div>
 
-        <!-- 6. ABOUT / CG VIVA MODAL -->
-        <div id="modal-about" class="modal-overlay" style="display: none;">
-            <div class="glass-panel modal-box about-box">
-                <h2>COMPUTER GRAPHICS VIVA & TECHNICAL ARCHITECTURE</h2>
-                <div class="viva-content">
-                    <p>This project is built from scratch using Three.js and WebGL without external GLB file dependencies, demonstrating comprehensive Computer Graphics topics:</p>
-                    <ul>
-                        <li><strong>1. Hierarchical 3D Modeling:</strong> The player car is built procedurally using a <code>THREE.Group</code> parent matrix hierarchy with chassis, cabin, wheels, spoiler, and bumpers.</li>
-                        <li><strong>2. Dynamic Particle Systems:</strong> Custom particle emitters for tire smoke, nitro exhaust flames, crash debris, and <code>THREE.Points</code> rain simulation.</li>
-                        <li><strong>3. Perspective Camera & FOV Expansion:</strong> Dynamic perspective projection expanding camera Field of View from 60° to 78° during high-speed nitro boosts.</li>
-                        <li><strong>4. Lighting & Shading Models:</strong> Dual Day/Night lighting with HemisphereLight, Directional sunlight with soft shadow mapping, roadside lamp PointLights, and car headlights.</li>
-                        <li><strong>5. Collision & Collection Detection:</strong> Real-time 3D bounding box (<code>THREE.Box3</code>) intersection testing for obstacles and gold coins.</li>
-                        <li><strong>6. Interpolation & Physics:</strong> Linear interpolation (<code>lerp</code>) for smooth horizontal steering, body roll tilt, and speed curve progression.</li>
-                    </ul>
-                </div>
-                <button class="btn btn-secondary btn-close-modal mt-3">CLOSE</button>
-            </div>
-        </div>
+
 
     </div>
 

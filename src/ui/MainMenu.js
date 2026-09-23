@@ -17,7 +17,6 @@ export class MainMenu {
         this.screenLoading = document.getElementById('screen-loading');
         this.screenStart = document.getElementById('screen-start-menu');
         this.screenGameOver = document.getElementById('screen-game-over');
-        this.modalAbout = document.getElementById('modal-about');
         this.modalGarage = document.getElementById('modal-garage');
         this.modalSettings = document.getElementById('modal-settings');
 
@@ -42,10 +41,6 @@ export class MainMenu {
 
         document.getElementById('btn-settings')?.addEventListener('click', () => {
             this.showModal(this.modalSettings);
-        });
-
-        document.getElementById('btn-about')?.addEventListener('click', () => {
-            this.showModal(this.modalAbout);
         });
 
         document.querySelectorAll('.btn-close-modal').forEach(btn => {
@@ -141,7 +136,6 @@ export class MainMenu {
     }
 
     hideModals() {
-        if (this.modalAbout) this.modalAbout.style.display = 'none';
         if (this.modalGarage) this.modalGarage.style.display = 'none';
         if (this.modalSettings) this.modalSettings.style.display = 'none';
     }
